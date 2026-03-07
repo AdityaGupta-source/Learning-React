@@ -1,7 +1,16 @@
 import {createSlice, nanoid } from "@reduxjs/toolkit";
-
+const loadTodos = () => {
+  const savedTodos = localStorage.getItem('todos');
+  if(savedTodos && savedTodos != 'undefined'){
+    return JSON.parse(savedTodos);
+  }
+  else{
+    return [];
+  }
+}
 const initialState = {
-  todos:[{id: 1, text: "Hello world"}]
+  todos:loadTodos(),
+  currentEdit: null,
 }
 
 export const todoSlice = createSlice({
@@ -20,10 +29,13 @@ export const todoSlice = createSlice({
     },
     updateTodo: (state,action) => {
       state.todos = state.todos.map((todo) => todo.id === action.payload.id ? {...todo, text: action.payload.text} :todo)
+    },
+    setCurrentEdit: (state,action) => {
+      state.currentEdit = action.payload;
     }
   }
 })
 
-export const {addTodo,removeTodo,updateTodo} = todoSlice.actions
+export const {addTodo,removeTodo,updateTodo,setCurrentEdit} = todoSlice.actions
 
 export default todoSlice.reducer
