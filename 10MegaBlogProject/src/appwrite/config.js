@@ -98,8 +98,8 @@ export class Service{
                 file,
             )
         } catch (error) {
-           console.log("upload file error",error);
-           return false;
+            console.log("upload file error",error);
+            return false;
         }
     }
 
@@ -111,8 +111,8 @@ export class Service{
             )
             return true;
         } catch (error) {
-          console.log("delete file error",error); 
-          return false; 
+            console.log("delete file error",error); 
+            return false; 
         }
     }
 
