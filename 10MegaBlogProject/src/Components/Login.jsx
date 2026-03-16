@@ -9,7 +9,7 @@ function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
-  const { error, setError } = useState("")
+  const [ error, setError ] = useState("")
   const login = async (data) => {
     setError("");
     try {
@@ -17,9 +17,9 @@ function Login() {
       if (session) {
         const userData = await authService.getCurrentUser()
         if (userData) {
-          dispatch(authLogin(userData))
+          dispatch(authLogin({userData}))
+          navigate("/")
         }
-        navigate("/")
       }
     } catch (error) {
       setError(error.message)
@@ -50,20 +50,20 @@ function Login() {
               label = "Email: "
               placeholder = "Enter your email"
               type = "email"
-              {...register("email"),{
+              {...register("email",{
                 required: true,
                 validate: {
-                  matchPatern: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Email address must be valid"
+                  matchPattern: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Email address must be valid"
                 }
-              }}
+              })}
             />
             <Input 
               label = "password"
               placeholder = "enter your password"
               type="password"
-              {...register("password"),{
+              {...register("password",{
                 required: true,
-              }}
+              })}
             />
             <Button
               type="submit"

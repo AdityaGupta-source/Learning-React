@@ -1,2 +1,32 @@
-
 @import "tailwindcss";
+
+@layer components {
+  .browser-css h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .browser-css h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .browser-css p {
+    margin-bottom: 1rem;
+  }
+  .browser-css ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+  }
+  .browser-css a {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+  .browser-css blockquote {
+    border-left: 4px solid #d1d5db;
+    padding-left: 1rem;
+    color: #4b5563;
+    font-style: italic;
+  }
+}

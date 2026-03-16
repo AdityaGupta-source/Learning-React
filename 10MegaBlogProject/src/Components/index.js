@@ -9,7 +9,7 @@ import Button from './Button'
 import Input from './Input'
 import PostCard from './PostCard'
 import Select from './Select'
-import PostForm from './PostForm'
+import PostForm from './post-form/PostForm'
 import RTE from './RTE'
 import AuthLayout from './AuthLayout'
 
@@ -27,5 +27,5 @@ export {
   Select,
   RTE,
   AuthLayout,
-  PostForm
+  PostForm,
 }

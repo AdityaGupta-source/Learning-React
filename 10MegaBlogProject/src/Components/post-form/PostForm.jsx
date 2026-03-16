@@ -20,13 +20,13 @@ function PostForm({ post }) {
 
   const submit = async (data) => {
     try {
-      if (userData) {
+      if (userData) {       
         if (post) {
           const file = data.image[0]
-            ? appwriteService.uploadFile(data.image[0])
+            ? await appwriteService.uploadFile(data.image[0])
             : null;
           if (file) {
-            appwriteService.deleteFile(post.featuredImage);
+            await appwriteService.deleteFile(post.featuredImage);
           }
           const dbPost = await appwriteService.updatePost(post.$id, {
             ...data,
@@ -36,12 +36,13 @@ function PostForm({ post }) {
             navigate(`/post/${dbPost.$id}`);
           }
         } else {
+          console.log("userData:", userData.$id);
           const file = await appwriteService.uploadFile(data.image[0]);
           if (file) {
             data.featuredImage = file.$id;
             const dbPost = await appwriteService.createPost({
-              ...data,
               userId: userData.$id,
+              ...data,
             });
             if (dbPost) {
               navigate(`/post/${dbPost.$id}`);
@@ -49,7 +50,9 @@ function PostForm({ post }) {
           }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("submit error:", error);
+    }
   };
 
   const slugTransform = useCallback((value) => {

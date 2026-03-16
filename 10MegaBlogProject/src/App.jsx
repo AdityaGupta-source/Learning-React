@@ -4,7 +4,6 @@ import {login,logout} from './Store/authSlice'
 import { useDispatch } from 'react-redux'
 import { Header, Footer } from './Components'
 import {Outlet} from 'react-router-dom'
-import './App.css'
 
 function App() {
   const [loading,setLoading] = useState(true);

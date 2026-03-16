@@ -28,7 +28,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            throw error
+            console.log("createPost error:",error)
         }
     }
 
@@ -47,7 +47,7 @@ export class Service{
             )
 
         } catch (error) {
-            throw error
+            console.log("updatePost error:",error)
         }
     }
 
@@ -60,7 +60,7 @@ export class Service{
             )
             return true;
         } catch (error) {
-            throw error;
+            console.log("deletePost error:",error)
             return false;
         }
     }
@@ -73,7 +73,7 @@ export class Service{
                 slug,
             )
         } catch (error) {
-            console.log()
+            console.log("getPost error:",error)
         }
     }
     async getPosts(queries = [Query.equal("status","active")]){
@@ -105,9 +105,9 @@ export class Service{
 
     async deleteFile(fileId){
         try {
-            return await thsi.bucket.deleteFile(
+            return await this.bucket.deleteFile(
                 conf.appwriteBucketId,
-                ID.unique(),
+                fileId,
             )
             return true;
         } catch (error) {
@@ -117,10 +117,12 @@ export class Service{
     }
 
     getFilePreview(fileId){
-        return this.bucket.getFilePreview(
+        if(!fileId) return "";
+        const fileUrl = this.bucket.getFilePreview(
             conf.appwriteBucketId,
             fileId,
-        )
+        );
+        return fileUrl ? fileUrl.toString() : "";
     }
 }
 const service = new Service();

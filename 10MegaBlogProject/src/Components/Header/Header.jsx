@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 function Header() {
-  const authStatus = useSelector((state) => state.auth.status);
+  const authStatus = useSelector((state) => state.auth.status) ?? false;
   const navigate = useNavigate();
   const navItems = [
     {
@@ -40,7 +40,7 @@ function Header() {
         <nav>
           <div>
             <Link to='/'>
-              <Logo width="70-px"></Logo>
+              <Logo width="70px"></Logo>
             </Link>
           </div>
           <ul className='flex ml-auto'>
