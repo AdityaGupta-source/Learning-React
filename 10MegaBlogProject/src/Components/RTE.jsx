@@ -3,9 +3,27 @@ import {Controller} from 'react-hook-form'
 import {Editor } from '@tinymce/tinymce-react';
 
 function RTE({name,label,defaultValue="",control}) {
+  const [editorHeight, setEditorHeight] = React.useState(300);
+  
+  React.useEffect(() => {
+    const updateHeight = () => {
+      if (window.innerWidth < 768) {
+        setEditorHeight(300);
+      } else if (window.innerWidth < 1024) {
+        setEditorHeight(400);
+      } else {
+        setEditorHeight(500);
+      }
+    };
+    
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+  
   return (
     <div className='w-full'>
-      {label && <label className='inline-block mb-1 pl-1 text-sm font-medium' style={{ color: '#cbd5e1' }}>{label}</label>}
+      {label && <label className='inline-block mb-2 md:mb-3 pl-1 text-xs sm:text-sm font-medium' style={{ color: '#cbd5e1' }}>{label}</label>}
       <Controller 
         name = {name || "content"}
         control = {control}
@@ -15,7 +33,7 @@ function RTE({name,label,defaultValue="",control}) {
             initialValue={defaultValue}
             init={{
                 initialValue: defaultValue,
-                height: 500,
+                height: editorHeight,
                 menubar: true,
                 plugins: [
                     "image",
@@ -41,13 +59,16 @@ function RTE({name,label,defaultValue="",control}) {
                 ],
                 toolbar:
                 "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
-                content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+                content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                skin: 'oxide-dark',
+                content_css: 'dark',
+                dialog_type: 'modal',
+                fixed_toolbar_container: undefined,
             }}
             onEditorChange={onChange}
           />
         )}
       />
-      
     </div>
   )
 }

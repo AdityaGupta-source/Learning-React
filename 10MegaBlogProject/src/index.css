@@ -22,71 +22,176 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, 'Segoe UI', 'Roboto', system-ui, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* ===== Custom Scrollbar ===== */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: rgba(15, 23, 42, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--accent-purple), var(--accent-blue));
-  border-radius: 4px;
+  border-radius: 5px;
+  border: 2px solid var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #9b6ff6, #5b9cf6);
+  background: linear-gradient(180deg, #a78bfa, #60a5fa);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-color: linear-gradient(180deg, var(--accent-purple), var(--accent-blue)) rgba(15, 23, 42, 0.5);
+  scrollbar-width: thin;
+}
+
+/* ===== Responsive Typography ===== */
+@layer base {
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
+  h3 {
+    @apply text-xl md:text-2xl lg:text-3xl font-bold;
+  }
+  h4 {
+    @apply text-lg md:text-xl font-semibold;
+  }
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
 }
 
 /* ===== Browser CSS for Rich Text Content ===== */
 @layer components {
   .browser-css {
     color: var(--text-primary);
+    word-break: break-word;
   }
+  
   .browser-css h1 {
-    font-size: 2.25rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    margin-top: 1.5rem;
     color: var(--text-primary);
   }
+  
+  .browser-css h1:first-child {
+    margin-top: 0;
+  }
+  
   .browser-css h2 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 2rem);
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    margin-top: 1.25rem;
     color: var(--text-primary);
   }
+  
+  .browser-css h3 {
+    font-size: clamp(1.125rem, 3vw, 1.875rem);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+    color: var(--text-primary);
+  }
+  
   .browser-css p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    line-height: 1.8;
+  }
+  
+  .browser-css ul,
+  .browser-css ol {
+    list-style-position: outside;
+    padding-left: clamp(1.5rem, 5vw, 2.5rem);
+    margin-bottom: 1.25rem;
     color: var(--text-secondary);
   }
-  .browser-css ul {
-    list-style-type: disc;
-    padding-left: 2rem;
-    margin-bottom: 1rem;
-    color: var(--text-secondary);
+  
+  .browser-css li {
+    margin-bottom: 0.5rem;
+    line-height: 1.8;
   }
+  
   .browser-css a {
     color: var(--accent-blue);
     text-decoration: underline;
+    transition: all 0.3s ease;
   }
+  
+  .browser-css a:hover {
+    color: var(--accent-purple);
+    text-decoration-thickness: 2px;
+  }
+  
   .browser-css blockquote {
     border-left: 4px solid var(--accent-purple);
-    padding-left: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(139, 92, 246, 0.05);
+    border-radius: 0.5rem;
     color: var(--text-secondary);
     font-style: italic;
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+  }
+  
+  .browser-css code {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    color: #a78bfa;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+  
+  .browser-css pre {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+  }
+  
+  .browser-css img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
   }
 }
 
@@ -94,11 +199,42 @@ body {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -113,4 +249,98 @@ body {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ===== Utility Classes ===== */
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.4s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.4s ease-out forwards;
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Responsive Container ===== */
+@layer components {
+  .container-responsive {
+    @apply mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl;
+  }
+}
+
+/* ===== TinyMCE Editor Fix ===== */
+.tox-tinymce {
+  border-radius: 0.5rem !important;
+}
+
+/* Ensure TinyMCE dialogs are always visible and clickable */
+.tox-dialog,
+.tox-dialog__backdrop,
+.tox-silver .tox-dialog,
+.tox .tox-dialog {
+  z-index: 99999 !important;
+  position: fixed !important;
+  pointer-events: all !important;
+}
+
+.tox-dialog__backdrop {
+  z-index: 99998 !important;
+}
+
+.tox-anchorbar,
+.tox .tox-anchorbar {
+  z-index: 9999 !important;
+}
+
+.tox .tox-mbtn-icontext,
+.tox .tox-tbtn {
+  cursor: pointer;
+  pointer-events: all !important;
+}
+
+/* Ensure editor iframe doesn't block dialogs */
+.tox .tox-editor-container {
+  position: relative;
+}
+
+/* Allow parent containers to display overflow content */
+.tox-tinymce-aux {
+  z-index: 99999 !important;
+}
+
+/* Fix for modal interactions */
+.tox .tox-dialog__header,
+.tox .tox-dialog__body,
+.tox .tox-dialog__footer {
+  pointer-events: all !important;
+}
+
+button.tox-button,
+.tox .tox-button {
+  pointer-events: all !important;
 }

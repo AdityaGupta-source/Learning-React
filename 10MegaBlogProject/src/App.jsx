@@ -8,6 +8,7 @@ import {Outlet} from 'react-router-dom'
 function App() {
   const [loading,setLoading] = useState(true);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     authServices.getCurrentUser()
     .then((userData) => {
@@ -18,29 +19,28 @@ function App() {
       }
     })
     .finally(() => setLoading(false))
-  },[])
+  },[dispatch])
+
   return !loading ?  
-    <div className='min-h-screen flex flex-wrap content-between' style={{ backgroundColor: '#0f172a' }}> 
-      <div className='w-full block'>
-        <Header />
-        <main className='min-h-[calc(100vh-160px)]'>
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+    <div className='min-h-screen w-full flex flex-col' style={{ backgroundColor: '#0f172a' }}> 
+      <Header />
+      <main className='flex-1'>
+        <Outlet />
+      </main>
+      <Footer />
     </div>
       : (
-        <div className='min-h-screen flex items-center justify-center' style={{ backgroundColor: '#0f172a' }}>
-          <div className='flex flex-col items-center gap-4'>
+        <div className='min-h-screen flex items-center justify-center px-4' style={{ backgroundColor: '#0f172a' }}>
+          <div className='flex flex-col items-center gap-3 md:gap-4'>
             <div 
-              className='w-12 h-12 rounded-full border-4 border-transparent'
+              className='w-10 md:w-12 h-10 md:h-12 rounded-full border-4 border-transparent'
               style={{ 
                 borderTopColor: '#8b5cf6', 
                 borderRightColor: '#3b82f6',
                 animation: 'spin 1s linear infinite' 
               }}
             />
-            <p style={{ color: '#94a3b8' }} className='text-sm font-medium'>Loading MegaBlog...</p>
+            <p style={{ color: '#94a3b8' }} className='text-xs md:text-sm font-medium'>Loading MegaBlog...</p>
           </div>
         </div>
       )

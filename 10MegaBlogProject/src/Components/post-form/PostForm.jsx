@@ -76,9 +76,9 @@ function PostForm({ post }) {
     return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap gap-6">
+    <form onSubmit={handleSubmit(submit)} className="flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-8 overflow-visible">
       <div 
-        className="flex-1 min-w-0 p-6 rounded-xl"
+        className="flex-1 p-4 md:p-6 rounded-lg md:rounded-xl overflow-visible"
         style={{ 
           backgroundColor: 'rgba(30, 41, 59, 0.5)',
           border: '1px solid rgba(148, 163, 184, 0.1)',
@@ -86,14 +86,14 @@ function PostForm({ post }) {
       >
         <Input
           label="Title :"
-          placeholder="Title"
-          className="mb-4"
+          placeholder="Enter post title"
+          className="mb-4 md:mb-6"
           {...register("title", { required: true })}
         />
         <Input
           label="Slug :"
-          placeholder="Slug"
-          className="mb-4"
+          placeholder="auto-generated-slug"
+          className="mb-4 md:mb-6"
           {...register("slug", { required: true })}
           onInput={(e) => {
             setValue("slug", slugTransform(e.currentTarget.value), {
@@ -101,15 +101,17 @@ function PostForm({ post }) {
             });
           }}
         />
-        <RTE
-          label="Content :"
-          name="content"
-          control={control}
-          defaultValue={getValues("content")}
-        />
+        <div className='overflow-visible'>
+          <RTE
+            label="Content :"
+            name="content"
+            control={control}
+            defaultValue={getValues("content")}
+          />
+        </div>
       </div>
       <div 
-        className="w-full lg:w-80 p-6 rounded-xl h-fit"
+        className="w-full lg:w-80 p-4 md:p-6 rounded-lg md:rounded-xl h-fit"
         style={{ 
           backgroundColor: 'rgba(30, 41, 59, 0.5)',
           border: '1px solid rgba(148, 163, 184, 0.1)',
@@ -118,29 +120,29 @@ function PostForm({ post }) {
         <Input
           label="Featured Image :"
           type="file"
-          className="mb-4"
+          className="mb-4 md:mb-6"
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
         {post && (
-          <div className="w-full mb-4">
+          <div className="w-full mb-4 md:mb-6">
             <img
               src={appwriteService.getFilePreview(post.featuredImage)}
               alt={post.title}
-              className="rounded-lg"
+              className="rounded-lg w-full h-auto object-cover"
             />
           </div>
         )}
         <Select
           options={["active", "inactive"]}
           label="Status"
-          className="mb-4"
+          className="mb-4 md:mb-6"
           {...register("status", { required: true })}
         />
         <Button
           type="submit"
           bgColor={post ? "bg-green-600" : undefined}
-          className="w-full"
+          className="w-full py-2.5 md:py-3 text-sm md:text-base font-semibold"
         >
           {post ? "Update" : "Submit"}
         </Button>

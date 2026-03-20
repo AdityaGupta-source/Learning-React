@@ -5,11 +5,13 @@ import { Logo, Input, Button } from './index'
 import { login as authLogin } from '../Store/authSlice'
 import authService from '../appwrite/auth'
 import { useForm } from 'react-hook-form'
+
 function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
   const [ error, setError ] = useState("")
+  
   const login = async (data) => {
     setError("");
     try {
@@ -25,25 +27,26 @@ function Login() {
       setError(error.message)
     }
   }
+  
   return (
-    <div className='flex items-center justify-center w-full py-16 px-4'>
-      <div className='w-full max-w-md'>
+    <div className='flex items-center justify-center w-full min-h-screen md:min-h-auto md:py-16 px-4'>
+      <div className='w-full max-w-sm md:max-w-md animate-fadeInUp'>
         {/* Top decorative accent */}
-        <div className='flex justify-center mb-8'>
+        <div className='flex justify-center mb-6 sm:mb-8'>
           <div 
-            className='w-20 h-20 rounded-2xl flex items-center justify-center'
+            className='w-16 sm:w-20 h-16 sm:h-20 rounded-2xl flex items-center justify-center'
             style={{ 
               background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15))',
               border: '1px solid rgba(139, 92, 246, 0.25)',
             }}
           >
-            <Logo width="55px" />
+            <Logo width="clamp(45px, 10vw, 55px)" />
           </div>
         </div>
 
         {/* Card */}
         <div 
-          className='rounded-2xl p-10'
+          className='rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10'
           style={{ 
             backgroundColor: 'rgba(30, 41, 59, 0.6)',
             border: '1px solid rgba(148, 163, 184, 0.12)',
@@ -52,18 +55,18 @@ function Login() {
           }}
         >
           <h2 
-            className="text-center text-3xl font-bold leading-tight mb-2"
+            className="text-center text-2xl sm:text-3xl font-bold leading-tight mb-1 sm:mb-2"
             style={{ color: '#f1f5f9' }}
           >
             Welcome back
           </h2>
-          <p className="text-center text-base mb-8" style={{ color: '#64748b' }}>
+          <p className="text-center text-sm sm:text-base mb-6 sm:mb-8" style={{ color: '#64748b' }}>
             Sign in to continue to your account
           </p>
 
           {error && (
             <div 
-              className="rounded-lg px-4 py-3 mb-6 text-sm text-center"
+              className="rounded-lg px-3 sm:px-4 py-2 sm:py-3 mb-4 sm:mb-6 text-xs sm:text-sm text-center animate-fadeIn"
               style={{ 
                 backgroundColor: 'rgba(239, 68, 68, 0.1)', 
                 border: '1px solid rgba(239, 68, 68, 0.2)',
@@ -75,11 +78,11 @@ function Login() {
           )}
 
           <form onSubmit={handleSubmit(login)}>
-            <div className='space-y-6'>
+            <div className='space-y-4 sm:space-y-6'>
               <Input
-                label = "Email"
-                placeholder = "you@example.com"
-                type = "email"
+                label="Email"
+                placeholder="you@example.com"
+                type="email"
                 {...register("email",{
                   required: true,
                   validate: {
@@ -88,8 +91,8 @@ function Login() {
                 })}
               />
               <Input 
-                label = "Password"
-                placeholder = "••••••••"
+                label="Password"
+                placeholder="••••••••"
                 type="password"
                 {...register("password",{
                   required: true,
@@ -97,7 +100,7 @@ function Login() {
               />
               <Button
                 type="submit"
-                className="w-full py-3 text-base"
+                className="w-full py-2.5 sm:py-3 text-sm sm:text-base font-semibold"
               >
                 Sign In
               </Button>
@@ -105,13 +108,13 @@ function Login() {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
+          <div className="flex items-center gap-3 sm:gap-4 my-6 sm:my-8">
             <div className="flex-1 h-px" style={{ backgroundColor: 'rgba(148, 163, 184, 0.15)' }} />
             <span className="text-xs font-medium uppercase tracking-wider" style={{ color: '#475569' }}>or</span>
             <div className="flex-1 h-px" style={{ backgroundColor: 'rgba(148, 163, 184, 0.15)' }} />
           </div>
 
-          <p className="text-center text-base" style={{ color: '#94a3b8' }}>
+          <p className="text-center text-sm sm:text-base" style={{ color: '#94a3b8' }}>
             Don&apos;t have an account?{' '}
             <Link
               to="/signup"
