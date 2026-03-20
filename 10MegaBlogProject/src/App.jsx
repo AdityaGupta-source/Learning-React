@@ -20,16 +20,30 @@ function App() {
     .finally(() => setLoading(false))
   },[])
   return !loading ?  
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'> 
+    <div className='min-h-screen flex flex-wrap content-between' style={{ backgroundColor: '#0f172a' }}> 
       <div className='w-full block'>
         <Header />
-        <main>
+        <main className='min-h-[calc(100vh-160px)]'>
           <Outlet />
         </main>
         <Footer />
       </div>
     </div>
-      : null
+      : (
+        <div className='min-h-screen flex items-center justify-center' style={{ backgroundColor: '#0f172a' }}>
+          <div className='flex flex-col items-center gap-4'>
+            <div 
+              className='w-12 h-12 rounded-full border-4 border-transparent'
+              style={{ 
+                borderTopColor: '#8b5cf6', 
+                borderRightColor: '#3b82f6',
+                animation: 'spin 1s linear infinite' 
+              }}
+            />
+            <p style={{ color: '#94a3b8' }} className='text-sm font-medium'>Loading MegaBlog...</p>
+          </div>
+        </div>
+      )
   
 }
 

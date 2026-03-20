@@ -118,7 +118,7 @@ export class Service{
 
     getFilePreview(fileId){
         if(!fileId) return "";
-        const fileUrl = this.bucket.getFilePreview(
+        const fileUrl = this.bucket.getFileView(
             conf.appwriteBucketId,
             fileId,
         );

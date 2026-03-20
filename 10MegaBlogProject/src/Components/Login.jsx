@@ -26,54 +26,102 @@ function Login() {
     }
   }
   return (
-    <div className='flex items-center justify-center w-full'>
-      <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-        <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-[100px]">
-            <Logo width="100%" />
-          </span>
-        </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
-        <p className="mt-2 text-center text-base text-black/60">
-          Don&apos;t have any account?&nbsp;
-          <Link
-            to="/signup"
-            className="font-medium text-primary transition-all duration-200 hover:underline"
+    <div className='flex items-center justify-center w-full py-16 px-4'>
+      <div className='w-full max-w-md'>
+        {/* Top decorative accent */}
+        <div className='flex justify-center mb-8'>
+          <div 
+            className='w-20 h-20 rounded-2xl flex items-center justify-center'
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15))',
+              border: '1px solid rgba(139, 92, 246, 0.25)',
+            }}
           >
-            Sign Up
-          </Link>
-        </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(login)} className='mt-8'>
-          <div className='space-y-5'>
-            <Input
-              label = "Email: "
-              placeholder = "Enter your email"
-              type = "email"
-              {...register("email",{
-                required: true,
-                validate: {
-                  matchPattern: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Email address must be valid"
-                }
-              })}
-            />
-            <Input 
-              label = "password"
-              placeholder = "enter your password"
-              type="password"
-              {...register("password",{
-                required: true,
-              })}
-            />
-            <Button
-              type="submit"
-              className="w-full"
-            >
-              Login
-            </Button>
-
+            <Logo width="55px" />
           </div>
-        </form>
+        </div>
+
+        {/* Card */}
+        <div 
+          className='rounded-2xl p-10'
+          style={{ 
+            backgroundColor: 'rgba(30, 41, 59, 0.6)',
+            border: '1px solid rgba(148, 163, 184, 0.12)',
+            backdropFilter: 'blur(24px)',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(139, 92, 246, 0.05)'
+          }}
+        >
+          <h2 
+            className="text-center text-3xl font-bold leading-tight mb-2"
+            style={{ color: '#f1f5f9' }}
+          >
+            Welcome back
+          </h2>
+          <p className="text-center text-base mb-8" style={{ color: '#64748b' }}>
+            Sign in to continue to your account
+          </p>
+
+          {error && (
+            <div 
+              className="rounded-lg px-4 py-3 mb-6 text-sm text-center"
+              style={{ 
+                backgroundColor: 'rgba(239, 68, 68, 0.1)', 
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                color: '#fca5a5' 
+              }}
+            >
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit(login)}>
+            <div className='space-y-6'>
+              <Input
+                label = "Email"
+                placeholder = "you@example.com"
+                type = "email"
+                {...register("email",{
+                  required: true,
+                  validate: {
+                    matchPattern: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Email address must be valid"
+                  }
+                })}
+              />
+              <Input 
+                label = "Password"
+                placeholder = "••••••••"
+                type="password"
+                {...register("password",{
+                  required: true,
+                })}
+              />
+              <Button
+                type="submit"
+                className="w-full py-3 text-base"
+              >
+                Sign In
+              </Button>
+            </div>
+          </form>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 my-8">
+            <div className="flex-1 h-px" style={{ backgroundColor: 'rgba(148, 163, 184, 0.15)' }} />
+            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: '#475569' }}>or</span>
+            <div className="flex-1 h-px" style={{ backgroundColor: 'rgba(148, 163, 184, 0.15)' }} />
+          </div>
+
+          <p className="text-center text-base" style={{ color: '#94a3b8' }}>
+            Don&apos;t have an account?{' '}
+            <Link
+              to="/signup"
+              className="font-semibold transition-all duration-200 hover:underline"
+              style={{ color: '#a78bfa' }}
+            >
+              Create one
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )
